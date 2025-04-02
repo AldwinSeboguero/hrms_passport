@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Employee;
 use App\Models\Timesheet;
+use App\Models\TimeInOutLog;
+
 use Carbon\Carbon;
 class EmployeeController extends Controller
 {
@@ -44,11 +46,17 @@ class EmployeeController extends Controller
         // Prepare the data to update or create
         $transactionDate = Carbon::parse($request->transaction_date);
         $timesheet =null;
+        $device_name = $request->device_name;
+        $type = $request->type;
+        $employee_id = $request->employee_id;
+        $time = $request->time;
+        
+
 
     // Format the day of the week as a three-letter abbreviation
 
         $employeeTimeSchedule = Employee::find($request->employee_id);
-        // dd($employeeTimeSchedule);
+        dd($employeeTimeSchedule);
         if($employeeTimeSchedule){
             if($employeeTimeSchedule->work_day_id != null){
                 $decodedData = json_decode($employeeTimeSchedule->workDays->data, true);
@@ -101,9 +109,11 @@ class EmployeeController extends Controller
                     ],
                     $data // Data to update or create
                 );
+               
+
             }
             //time out am
-            else if($transactionTIme->gt($workingAMIN)&&$transactionTIme->lt($workingPMIN)&&($totalMinutesAMOUT<=30)){
+            else if($transactionTIme->gt($workingAMIN)&&$transactionTIme->lt($workingPMIN)&&($totalMinutesPMIN<=30)){
                 // dd("Time OUT AM");
                 $data = [
                     'employee_id' => $request->employee_id,
@@ -134,6 +144,7 @@ class EmployeeController extends Controller
                     [
                         'employee_id' => $request->employee_id,
                         'transaction_date' => $request->transaction_date, // Conditions
+                        
                     ],
                     $data // Data to update or create
                 );
@@ -156,6 +167,21 @@ class EmployeeController extends Controller
                     $data // Data to update or create
                 );
             }
+            TimeInOutLog::updateOrCreate(
+                [
+                    'employee_id' => $request->employee_id,
+                    'date' => $request->transaction_date, // Conditions
+                    'time_in_out' => $time,
+                    'type' => $type,
+
+                ],
+            [
+                'employee_id' => $employee_id,
+                'time_in_out' => $time,
+                'date' => $transactionDate,
+                'type' => $type,
+                'device_name' => $device_name
+            ]);
         }
         // else{
         
