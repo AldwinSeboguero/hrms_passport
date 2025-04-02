@@ -56,7 +56,7 @@ class EmployeeController extends Controller
     // Format the day of the week as a three-letter abbreviation
 
         $employeeTimeSchedule = Employee::find($request->employee_id);
-        dd($employeeTimeSchedule);
+       
         if($employeeTimeSchedule){
             if($employeeTimeSchedule->work_day_id != null){
                 $decodedData = json_decode($employeeTimeSchedule->workDays->data, true);
