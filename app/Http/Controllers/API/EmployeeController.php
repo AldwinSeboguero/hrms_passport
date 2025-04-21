@@ -43,14 +43,13 @@ class EmployeeController extends Controller
         //     'transactionDate' => 'required|date', 
         // ]);
     
-        // Prepare the data to update or create
+        // Prepare the data to update or create 
         $transactionDate = Carbon::parse($request->transaction_date);
         $timesheet =null;
         $device_name = $request->device_name;
         $type = $request->type;
         $employee_id = $request->employee_id;
-        $time = $request->time;
-        
+        $time = $request->time; 
 
 
     // Format the day of the week as a three-letter abbreviation
@@ -113,7 +112,7 @@ class EmployeeController extends Controller
 
             }
             //time out am
-            else if($transactionTIme->gt($workingAMIN)&&$transactionTIme->lt($workingPMIN)&&($totalMinutesPMIN>=30)){
+            else if($transactionTIme->gt($workingAMIN)&&$transactionTIme->lt($workingPMIN)&&($totalMinutesPMIN>=30) && $type == "Time Out Am"){
                 // dd("Time OUT AM");
                 $data = [
                     'employee_id' => $request->employee_id,
@@ -131,7 +130,7 @@ class EmployeeController extends Controller
                 );
             }
             //time in pm
-            else if($transactionTIme->lt($workingPMIN)||$transactionTIme->lt($workingPMOUT)&&($totalMinutesPMOUT>=90)){
+            else if($transactionTIme->lt($workingPMIN)||$transactionTIme->lt($workingPMOUT)&&($totalMinutesPMOUT>=90)  && $type == "Time In Pm"){
                 // dd("Time IN PM");
                 $data = [
                     'employee_id' => $request->employee_id,
