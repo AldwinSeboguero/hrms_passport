@@ -112,7 +112,7 @@ class EmployeeController extends Controller
 
             }
             //time out am
-            else if($transactionTIme->gt($workingAMIN)&&$transactionTIme->lt($workingPMIN)&&($totalMinutesPMIN>=30) && $type == "Time Out Am"){
+            else if($transactionTIme->gt($workingAMIN)&&$transactionTIme->lt($workingPMIN)&&($totalMinutesPMIN>=30) && $type == "Time Out"){
                 // dd("Time OUT AM");
                 $data = [
                     'employee_id' => $request->employee_id,
@@ -130,7 +130,7 @@ class EmployeeController extends Controller
                 );
             }
             //time in pm
-            else if($transactionTIme->lt($workingPMIN)||$transactionTIme->lt($workingPMOUT)&&($totalMinutesPMOUT>=90)  && $type == "Time In Pm"){
+            else if($transactionTIme->lt($workingPMIN)||$transactionTIme->lt($workingPMOUT)&&($totalMinutesPMOUT>=90)  && $type == "Time In"){
                 // dd("Time IN PM");
                 $data = [
                     'employee_id' => $request->employee_id,
@@ -166,6 +166,43 @@ class EmployeeController extends Controller
                     $data // Data to update or create
                 );
             }
+             //time ot in
+             else if($type == "OT In"){
+                // dd("Time OUT PM");
+                $data = [
+                    'employee_id' => $request->employee_id,
+                    'transaction_date' => $request->transaction_date,
+        
+                    'loginot' => $request->time,
+                    // Add other fields as needed
+                ];
+                $timesheet = Timesheet::updateOrCreate(
+                    [
+                        'employee_id' => $request->employee_id,
+                        'transaction_date' => $request->transaction_date, // Conditions
+                    ],
+                    $data // Data to update or create
+                );
+            }
+
+                 //time ot in
+                 else if($type == "OT Out"){
+                    // dd("Time OUT PM");
+                    $data = [
+                        'employee_id' => $request->employee_id,
+                        'transaction_date' => $request->transaction_date,
+            
+                        'logoutot' => $request->time,
+                        // Add other fields as needed
+                    ];
+                    $timesheet = Timesheet::updateOrCreate(
+                        [
+                            'employee_id' => $request->employee_id,
+                            'transaction_date' => $request->transaction_date, // Conditions
+                        ],
+                        $data // Data to update or create
+                    );
+                }
             TimeInOutLog::updateOrCreate(
                 [
                     'employee_id' => $request->employee_id,
