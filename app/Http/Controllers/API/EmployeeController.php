@@ -112,7 +112,7 @@ class EmployeeController extends Controller
 
             }
             //time out am
-            else if($transactionTIme->gt($workingAMIN)&&$transactionTIme->lt($workingPMIN)&&($totalMinutesPMIN>=30) && $type == "Time Out"){
+            else if($transactionTIme->gt($workingAMIN)&&$transactionTIme->lt($workingPMIN)&&($totalMinutesPMIN>=30) && ($type == "Time Out" || $type == "Time Out Am")){
                 // dd("Time OUT AM");
                 $data = [
                     'employee_id' => $request->employee_id,
@@ -130,7 +130,7 @@ class EmployeeController extends Controller
                 );
             }
             //time in pm
-            else if($transactionTIme->lt($workingPMIN)||$transactionTIme->lt($workingPMOUT)&&($totalMinutesPMOUT>=90)  && $type == "Time In"){
+            else if($transactionTIme->lt($workingPMIN)||$transactionTIme->lt($workingPMOUT)&&($totalMinutesPMOUT>=90)  && ($type == "Time In" || $type == "Time In Pm")){
                 // dd("Time IN PM");
                 $data = [
                     'employee_id' => $request->employee_id,
