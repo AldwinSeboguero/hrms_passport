@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Auth;
 use App\Models\BioStation;
+use App\Models\HwidAttempt;
 class AuthController extends Controller
 {
     //
@@ -29,6 +30,14 @@ class AuthController extends Controller
         ]);
     }
     public function login(Request $request){
+       HwidAttempt::updateOrCreate(
+    [
+        'hwid' => $request->hwid, // Attributes to search for
+    ],
+    [
+        'hwid' => $request->hwid, // Data to update or create
+    ]
+);
         if(Auth::attempt(["email" => $request->email,"password" => $request->password] ) && BioStation::where('hwid', $request->hwid)->first()){
         // dd(BioStation::where('hwid', $request->hwid)->first());
 
