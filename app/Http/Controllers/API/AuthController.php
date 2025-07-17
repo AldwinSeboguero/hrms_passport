@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Auth;
+use App\Models\BioStation;
 class AuthController extends Controller
 {
     //
@@ -28,7 +29,9 @@ class AuthController extends Controller
         ]);
     }
     public function login(Request $request){
-        if(Auth::attempt(["email" => $request->email,"password" => $request->password])){
+        if(Auth::attempt(["email" => $request->email,"password" => $request->password] ) && BioStation::where('hwid', $request->hwid)->first()){
+        // dd(BioStation::where('hwid', $request->hwid)->first());
+
             $user = Auth::user();
             $response = [];
             $response["token"] = $user->createToken("ParSUHRMS")->accessToken;
