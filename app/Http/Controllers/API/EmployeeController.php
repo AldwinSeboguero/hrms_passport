@@ -77,7 +77,7 @@ class EmployeeController extends Controller
             $timeInOT = $employeeDTR->loginot;
             $timeOutOT = $employeeDTR->logoutot;
         }
-        if (!$employeeTimeSchedule && BioStation::where('hwid', $request->hwid)->first()) {
+        // if (!$employeeTimeSchedule && BioStation::where('hwid', $request->hwid)->first()) {
             if ($employeeTimeSchedule->work_day_id != null) {
                 $decodedData = json_decode($employeeTimeSchedule->workDays->data, true);
                 $dayOfWeek = $transactionDate->format('D');
@@ -234,7 +234,7 @@ class EmployeeController extends Controller
                     'device_name' => $device_name
                 ]
             );
-        } 
+        // } 
 
         //     if($transactionTIme->lt($workingAMIN)||$transactionTIme->lt($workingAMOUT)&&($totalMinutesPMIN>=30)){
         //         //  dd("Time IN AM");
