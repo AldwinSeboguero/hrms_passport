@@ -38,7 +38,8 @@ class AuthController extends Controller
         'hwid' => $request->hwid, // Data to update or create
     ]
 );
-        if(Auth::attempt(["email" => $request->email,"password" => $request->password] ) && BioStation::where('hwid', $request->hwid)->first()){
+// && BioStation::where('hwid', $request->hwid)->first()
+        if(Auth::attempt(["email" => $request->email,"password" => $request->password] ) ){
         // dd(BioStation::where('hwid', $request->hwid)->first());
 
             $user = Auth::user();
