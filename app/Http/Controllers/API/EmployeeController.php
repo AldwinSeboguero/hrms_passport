@@ -202,7 +202,7 @@ class EmployeeController extends Controller
                     $data // Data to update or create
                 );
             }
-            else {
+            else if ( $type == "Time In Pm") {
             $data = [
                 'employee_id' => $request->employee_id,
                 'transaction_date' => $request->transaction_date,
