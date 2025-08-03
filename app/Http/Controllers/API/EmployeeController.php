@@ -111,7 +111,7 @@ class EmployeeController extends Controller
 
             $data = [];
             //time in
-            if (!$timeInAM && $totalMinutesAMOUT >= 30 && $transactionTIme->lt($workingAMOUT)) {
+            if (!$timeInAM && $totalMinutesAMOUT >= 30 && $transactionTIme->lt($workingAMOUT) && ($type == "Time In Am")) {
                 // dd("Time IN AM " .$timeInAM."\n Transaction TIme:".$transactionTIme. "\n Work AM:".$workingAMOUT."\n Interval OUT:".$intervalAMOUT);
                 $data = [
                     'employee_id' => $request->employee_id,
@@ -127,7 +127,7 @@ class EmployeeController extends Controller
                     ],
                     $data // Data to update or create
                 );
-            } else if ($totalMinutesPMIN > 28 && $transactionTIme->gt($workingAMIN) && $transactionTIme->lt($workingPMIN)) {
+            } else if ($totalMinutesPMIN > 28 && $transactionTIme->gt($workingAMIN) && $transactionTIme->lt($workingPMIN)&& ($type == "Time Out Am")) {
                 // dd("Time OUT AM " .$timeInAM."\n Transaction TIme:".$transactionTIme. "\n Work PM IN:".$workingPMIN."\n Interval PM IN:".$intervalPMIN);
                 $data = [
                     'employee_id' => $request->employee_id,
@@ -145,7 +145,7 @@ class EmployeeController extends Controller
                 );
             } else if (
                 $transactionTIme->lt($workingPMOUT) && $transactionTIme->gt($workingAMOUT) && !$timeInPM
-                && $transactionTIme->lt($workingPMIN->addMinutes(119))
+                && $transactionTIme->lt($workingPMIN->addMinutes(119) && ( $type == "Time In Pm"))
             ) {
                 // dd("Time IN PM");
                 $data = [
