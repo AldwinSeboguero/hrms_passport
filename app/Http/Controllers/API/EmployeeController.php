@@ -163,7 +163,7 @@ class EmployeeController extends Controller
             }  
 
             //time ot in
-            else if ($type == "OT In") {
+            else if ($type == "Time In Ot") {
                 // dd("Time OUT PM");
                 $data = [
                     'employee_id' => $request->employee_id,
@@ -182,7 +182,7 @@ class EmployeeController extends Controller
             }
 
             //time ot in
-            else if ($type == "OT Out") {
+            else if ($type == "Time Out Ot") {
                 // dd("Time OUT PM");
                 $data = [
                     'employee_id' => $request->employee_id,
