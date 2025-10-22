@@ -83,7 +83,7 @@ class EmployeeController extends Controller
                 $dayOfWeek = $transactionDate->format('D');
                 // Access the data for "MON"
                 $workingData = $decodedData['Days'][strtoupper($dayOfWeek)] ?? null;
-                $workingAMIN = $workingData['timeInAM'] ? Carbon::createFromFormat('H:i', $workingData['timeInAM']) : Carbon::createFromFormat('H:i', "8:00");
+                $workingAMIN = isset($workingData['timeInAM']) ? Carbon::createFromFormat('H:i', $workingData['timeInAM']) : Carbon::createFromFormat('H:i', "8:00");
                 $workingAMOUT = $workingData['timeOutAM'] ? Carbon::createFromFormat('H:i', $workingData['timeOutAM']) : Carbon::createFromFormat('H:i', "12:00");
                 $workingPMIN =  $workingData['timeInPM'] ? Carbon::createFromFormat('H:i', $workingData['timeInPM']) : Carbon::createFromFormat('H:i', "13:00");
                 $workingPMOUT = $workingData['timeOutPM'] ? Carbon::createFromFormat('H:i', $workingData['timeOutPM']) : Carbon::createFromFormat('H:i', "17:00");
